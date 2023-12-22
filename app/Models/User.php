@@ -104,6 +104,11 @@ class User extends Authenticatable
         return $this->belongsTo(Usertype::class);
     }
 
+    public function Office()
+    {
+        return $this->belongsTo(Office::class);
+    }
+
     public function comlists()
     {
         return $this->hasMany(Comlist::class);

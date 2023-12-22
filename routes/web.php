@@ -8,6 +8,7 @@ use App\Http\Controllers\ChangePassword;
 use App\Http\Controllers\ComlistController;
 use App\Http\Controllers\HolidayController;
 use App\Http\Controllers\LeaveController;
+use App\Http\Controllers\OfficeController;
 use App\Http\Controllers\OvertimeController;
 use App\Http\Controllers\PolicyController;
 use App\Http\Controllers\UserController;
@@ -610,6 +611,10 @@ Route::group(['middleware' => ['auth', 'checkstatus', 'hradmin'], 'prefix' => '/
 
 Route::group(['middleware' => ['auth', 'checkstatus'], 'prefix' => '/admin', 'as' => 'admin.'], function () {
     Route::resource('policies', PolicyController::class);
+});
+
+Route::group(['middleware' => ['auth', 'checkstatus'], 'prefix' => '/admin', 'as' => 'admin.'], function () {
+    Route::resource('offices', OfficeController::class);
 });
 
 Route::group(['middleware' => ['auth', 'checkstatus'], 'prefix' => '/admin', 'as' => 'admin.'], function () {

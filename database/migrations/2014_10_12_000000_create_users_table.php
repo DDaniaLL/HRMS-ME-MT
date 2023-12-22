@@ -33,6 +33,7 @@ return new class extends Migration
             $table->string('password')->nullable();
             $table->text('token')->nullable();
             $table->foreignId('usertype_id')->nullable();
+            $table->foreignId('office_id')->nullable();
             $table->string('preflang')->nullable()->default('en');
             $table->softDeletes();
             $table->rememberToken();

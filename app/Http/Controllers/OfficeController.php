@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Office;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class OfficeController extends Controller
 {
@@ -12,7 +13,8 @@ class OfficeController extends Controller
      */
     public function index()
     {
-        //
+        $office = Office::all();
+        return view('admin.offices.index', ['offices' => $office]);
     }
 
     /**
@@ -20,7 +22,15 @@ class OfficeController extends Controller
      */
     public function create()
     {
-        //
+        $authuser = Auth::user();
+        if ($authuser->hradmin == "yes")
+        {
+            return view('admin.offices.create');
+        }
+        else
+        {
+            abort(403);
+        }
     }
 
     /**
@@ -28,7 +38,29 @@ class OfficeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $authuser = Auth::user();
+        if ($authuser->hradmin !== "yes")
+        {
+            abort(403);
+        }
+        else
+        {
+            $request->validate([
+                'name' => 'required|unique:offices,name',
+                'desc',
+                
+            ]);
+    
+            
+    
+            $office = new Office();
+            $office->name = $request->name;
+            $office->description = $request->desc;
+            $office->save();
+    
+            $office = Office::all();
+            return view('admin.offices.index', ['offices' => $office]);
+        }
     }
 
     /**
