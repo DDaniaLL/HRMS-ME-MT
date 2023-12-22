@@ -394,9 +394,10 @@
         <p>{{ __('sidebar.holidays') }}</p>
     </a>
   </li>
+
   <div class="dropdown-divider" style="border-color:rgb(77, 77, 77);"></div>
   <li class="nav-item">
-    <a class="nav-link {{ $activePage == 'policies' ? ' active' : '' }}" href="{{ route('admin.policies.index') }}">
+    <a class="nav-link {{ $activePage == 'offices' ? ' active' : '' }}" href="{{ route('admin.offices.index') }}">
         <i class="fas fa-file-alt nav-icon"></i>
         <p>{{ __('sidebar.systemsettings') }}</p>
     </a>

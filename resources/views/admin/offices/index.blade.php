@@ -1,4 +1,4 @@
-@extends('layouts.app', ['activePage' => 'policies', 'titlePage' => ('policies')])
+@extends('layouts.app', ['activePage' => 'offices', 'titlePage' => ('offices')])
 
 @section('content')
 
@@ -16,14 +16,14 @@
                   <div class="container-fluid">
                       <div class="card">
                         <div class="card-header card-header-primary">
-                          <h4 class="card-title ">{{__('hrPolicies.hrPolicies')}}</h4>
+                          <h4 class="card-title ">{{__('systemoffices.offices')}}</h4>
                           @php
                           $user = Auth::user()
                       @endphp
                       @if ($user->office == "CO-Erbil")
                       @if ($user->hradmin == 'yes')
                              <div   div class="col-12 text-right">
-                                <a href="{{route('admin.offices.create')}}" class="btn btn-sm btn-primary">{{__('hrPolicies.addPolicy')}}</a>
+                                <a href="{{route('admin.offices.create')}}" class="btn btn-sm btn-primary">{{__('systemoffices.addOffice')}}</a>
                              </div>
                       @endif
                       @endif
@@ -34,19 +34,20 @@
                         <table class="table table-hover text-nowrap table-Secondary">
                         <thead>
                             <tr>
-                              <th class="text-center" scope="col">{{__('hrPolicies.name')}}</th>
-                              <th class="text-center" scope="col">{{__('hrPolicies.description')}}</th>
-              
+                              <th class="text-center" scope="col">{{__('systemoffices.name')}}</th>
+                              <th class="text-center" scope="col">{{__('systemoffices.description')}}</th>
+                              <th class="text-center" scope="col">{{__('systemoffices.countryoffice')}}</th>
                               @if ($user->hradmin == 'yes')
-                              <th class="text-center" scope="col">{{__('hrPolicies.action')}}</th>
+                              <th class="text-center" scope="col">{{__('systemoffices.action')}}</th>
                               @endif
                             </tr>
                           </thead>
                           <tbody>
                             @foreach ($offices as $office)
                             <tr>
-                              <td class="text-center"><a href="/storage/files/{{$office->name}}.pdf" target="_blank">{{ $office->name }}</a></td>
-                              <td class="text-center">{{ $office->desc }}</td>
+                              <td class="text-center">{{ $office->name }}</a></td>
+                              <td class="text-center">{{ $office->description }}</td>
+                              <td class="text-center">{{ $office->isprob }}</td>
                               
                               @if ($user->hradmin == 'yes')
                               @if ($user->office == "CO-Erbil")
@@ -82,7 +83,7 @@
                               </div>
                               <div class="modal-body">
                                 <p>Are you sure you want to delete: <br><strong>{{$office->name}}</strong>.</p>
-                                <form method="POST" action="{{ route('admin.policies.destroy', $office) }}" class="text-center" >
+                                <form method="POST" action="{{ route('admin.offices.destroy', $office) }}" class="text-center" >
                                   {{ csrf_field() }}
                                   {{ method_field('DELETE') }}
                                   <div class="form-group">

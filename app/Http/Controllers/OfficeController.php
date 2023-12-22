@@ -92,6 +92,18 @@ class OfficeController extends Controller
      */
     public function destroy(Office $office)
     {
-        //
+        $authuser = Auth::user();
+        if ($authuser->hradmin == "yes")
+        {
+             // File::delete($policy->name);
+             // File::delete(public_path("files/{{$policy->name}} . '.pdf'"));
+          
+          $office->delete();
+          return redirect()->route('admin.offices.index');
+        }
+        else
+        {
+            abort(403);
+        }
     }
 }
