@@ -64,31 +64,29 @@
                                                     @endforeach --> --}}
 
                                                     @php
-                                        $user = Auth::user();
-                                        @endphp
-                                        @if($user->contract == "International")
-                                        <option value="12">{{__('createLeave.HomeLeave')}}</option>
-                                        <option value="11">{{__('createLeave.R&R')}}</option>
-                                        <option disabled>──────────</option>
-                                        <option value="1">{{__('createLeave.AnnualLeave')}}</option>
-                                        <option value="13">{{__('createLeave.AnnualleaveFirsthalf')}}</option>
-                                        <option value="14">{{__('createLeave.AnnualleaveSecondhalf')}}</option>
-                                        <option disabled>──────────</option>
+                                                    $user = Auth::user();
+                                                    @endphp
+
+                                        @foreach ($leavetypes->sortBy('name') as $leavetype)
+                                        <option value={{$leavetype->id}}>{{$leavetype->name}}</option>
+                                        @endforeach
+                                        {{-- @if($user->contract == "International")
+                                                    <option value="12">{{__('createLeave.HomeLeave')}}</option>
+                                                    <option value="11">{{__('createLeave.R&R')}}</option>
+                                                    <option disabled>──────────</option>
+                                                    <option value="1">{{__('createLeave.AnnualLeave')}}</option>
+                                                    <option value="13">{{__('createLeave.AnnualleaveFirsthalf')}}</option>
+                                                    <option value="14">{{__('createLeave.AnnualleaveSecondhalf')}}</option>
+                                                    <option disabled>──────────</option>
                                                     <option value="15">{{__('createLeave.Unpaidleave')}}</option>
                                                     <option value="16">{{__('createLeave.UnpaidleaveFirsthalf')}}</option>
                                                     <option value="17">{{__('createLeave.UnpaidleaveSecondhalf')}}</option>
                                                     <option disabled>──────────</option>
                                                     <option value="22">{{__('createLeave.wfh')}}</option>
-
                                         @endif
                                      
 
                                         @if($user->contract == "National")
-
-                                       
-
-
-
                                                     <option value="1">{{__('createLeave.AnnualLeave')}}</option>
                                                     <option value="13">{{__('createLeave.AnnualleaveFirsthalf')}}</option>
                                                     <option value="14">{{__('createLeave.AnnualleaveSecondhalf')}}</option>
@@ -115,13 +113,13 @@
                                                     <option disabled>──────────</option>
                                                     <option value="10">{{__('createLeave.Pilgrimage')}}</option>
                                                     <option value="22">{{__('createLeave.wfh')}}</option>
-                                                    @endif
+                                                    @endif --}}
 
                                                 </select>
                                                 
                                                 </div>
                                               </div>
-                                              @if (count($userss))
+                                              {{-- @if (count($userss))
                                               <div class="form-group col-sm-6 flex-column d-flex">
                                                 <label class="form-control-label px-1">{{__('createLeave.substaff')}}</label>
                                                 <input class="form-control form-outline" type="text" list="FavoriteColor" id="mystaff"  name="mystaff" placeholder="" autocomplete="off">
@@ -132,7 +130,7 @@
                                                         </datalist>
                                                         </p>
                                         </div>
-                                              @endif
+                                              @endif --}}
                                               
    
                                         </div>

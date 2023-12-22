@@ -49,24 +49,16 @@ class LeaveController extends Controller
     {
         
         $user = Auth::user();
-        $userss = User::where([
-            ['linemanager', $user->name],
-            ['grade' ,'<', 3],
-            ])->get();
+        // $userss = User::where([
+        //     ['linemanager', $user->name],
+        //     ['grade' ,'<', 3],
+        //     ])->get();
+  
 
-            
-        $leavesIds = [1, 13, 14, 15, 16, 17];
-        if ($user->contract == 'International') {
-            $leavetypes = Leavetype::whereIn('id', $leavesIds)->get();
-
-            return view('leaves.create', ['leavetypes' => $leavetypes,'userss' => $userss]);
-
-        } else {
-
-            $leavetypes = Leavetype::all();
-
-            return view('leaves.create', ['leavetypes' => $leavetypes,'userss' => $userss]);
-        }
+            $leavetypes = Leavetype::where($user->contract,'yes')->get();
+            return view('leaves.create', ['leavetypes' => $leavetypes]);
+            // return view('leaves.create', ['leavetypes' => $leavetypes,'userss' => $userss]);
+        
     }
 
     /**
@@ -120,6 +112,8 @@ class LeaveController extends Controller
             '2023-12-25',
             '2024-01-01',   
         ];
+
+        
 
         if ($request->mystaff !== null)
         {

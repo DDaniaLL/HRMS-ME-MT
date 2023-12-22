@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('international')->nullable();
             $table->string('service')->nullable();
             $table->string('custom')->nullable();
+            $table->string('order')->nullable();
             $table->timestamps();
         });
     }
