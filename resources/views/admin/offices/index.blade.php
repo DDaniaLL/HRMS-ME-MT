@@ -20,26 +20,23 @@
                           @php
                           $user = Auth::user()
                       @endphp
-                      @if ($user->office == "CO-Erbil")
-                      @if ($user->hradmin == 'yes')
+                     
                              <div   div class="col-12 text-right">
                                 <a href="{{route('admin.offices.create')}}" class="btn btn-sm btn-primary">{{__('systemoffices.addOffice')}}</a>
                              </div>
-                      @endif
-                      @endif
+                    
+                  
                         </div>
                         <div class="card-body table-responsive-md">
 
-                          <div class="row">
-                        <table class="table table-hover text-nowrap table-Secondary">
+                          
+                            <table id="table_iddd" class="table w-100 d-block d-md-table table-responsive table-bordered table-hover text-nowrap table-Secondary table-striped">
                         <thead>
-                            <tr>
-                              <th class="text-center" scope="col">{{__('systemoffices.name')}}</th>
-                              <th class="text-center" scope="col">{{__('systemoffices.description')}}</th>
-                              <th class="text-center" scope="col">{{__('systemoffices.countryoffice')}}</th>
-                              @if ($user->hradmin == 'yes')
-                              <th class="text-center" scope="col">{{__('systemoffices.action')}}</th>
-                              @endif
+                          <tr style=" background-color: #ffb678 !important;">
+                              <th class="text-center" style="width: 20%"  scope="col">{{__('systemoffices.name')}}</th>
+                              <th class="text-center"style="width: 20%"  scope="col">{{__('systemoffices.description')}}</th>
+                              <th class="text-center" style="width: 20%" scope="col">{{__('systemoffices.countryoffice')}}</th>
+                              
                             </tr>
                           </thead>
                           <tbody>
@@ -47,21 +44,14 @@
                             <tr>
                               <td class="text-center">{{ $office->name }}</a></td>
                               <td class="text-center">{{ $office->description }}</td>
-                              <td class="text-center">{{ $office->isprob }}</td>
-                              
-                              @if ($user->hradmin == 'yes')
-                              @if ($user->office == "CO-Erbil")
-                              <td class="text-center">
-                                <div class="text-center"><button type="button" class=" form-group btn btn-sm btn-danger" data-toggle="modal" data-target="#myModal{{$office->id}}">Delete</button></div>
-                            </td>
-                            @endif
-                            @endif
+                              <td class="text-center">{{ $office->isco }}</td>
+                            
                             </tr>
                             @endforeach
                           </tbody>
                       </table>
 
-                          </div>
+                        
 
                         </div>
                       </div>
@@ -69,55 +59,23 @@
 
 
 
-                      @foreach ($offices as $office)
+                   
 
-
-                      <div id="myModal{{$office->id}}" class="modal fade" role="dialog">
-                          <div class="modal-dialog modal-sm">
-
-                            <!-- Modal content-->
-                            <div class="modal-content">
-                              <div class="modal-header">
-                                <h4 style="color: red" class="modal-title">Attention!</h4>
-                                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                              </div>
-                              <div class="modal-body">
-                                <p>Are you sure you want to delete: <br><strong>{{$office->name}}</strong>.</p>
-                                <form method="POST" action="{{ route('admin.offices.destroy', $office) }}" class="text-center" >
-                                  {{ csrf_field() }}
-                                  {{ method_field('DELETE') }}
-                                  <div class="form-group">
-                                      <input type="submit" class="btn btn-danger" value="Delete">
-                                  </div>
-                              </form>
-                              </div>
-                              <div class="modal-footer">
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                              </div>
-                            </div>
-
-                          </div>
-                        </div>
-                        @endforeach
-
-                        <style>
-                            table td {
-                              font-size: 20px;
-                            }
-                           </style>
+                       
                   </div>
               </div>
           </div>
  @endsection
  @push('scripts')
-
+ <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.js"></script>
  <script>
+  $('#table_iddd').DataTable(
+      {
+          "order": [[ 2, "desc" ]],
+          
+      }
+  );
 
-    var myModal = document.getElementById('myModal')
-    var myInput = document.getElementById('myInput')
-
-    myModal.addEventListener('shown.bs.modal', function () {
-      myInput.focus()
-    })
+  
     </script>
     @endpush

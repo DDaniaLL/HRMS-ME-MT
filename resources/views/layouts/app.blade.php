@@ -414,7 +414,7 @@
         <li class="nav-item" >
           <a class="nav-link {{ $activePage == 'leavetypes' ? ' active' : '' }}" href="{{ route('admin.leavetypes.index') }}">
             <i style="padding-left:20px" class="fas fa-address-book nav-icon"></i>
-            <p style="padding-left:20px">{{ __('sidebar.leavetypes') }}</p>
+            <p style="padding-left:20px">{{ __('sidebar.leavetypessettings') }}</p>
           </a>
         </li>
       </ul>
