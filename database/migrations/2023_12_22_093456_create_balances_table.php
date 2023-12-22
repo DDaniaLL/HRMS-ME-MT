@@ -13,7 +13,12 @@ return new class extends Migration
     {
         Schema::create('balances', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->foreignId('leavetype_id');
+            $table->foreignId('user_id');
+            $table->decimal('value', 8, 3)->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
