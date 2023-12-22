@@ -13,6 +13,11 @@ return new class extends Migration
     {
         Schema::create('policies', function (Blueprint $table) {
             $table->id();
+            $table->string('name')->unique();
+            $table->string('desc')->nullable();
+            $table->date('created_date')->nullable();
+            $table->date('lastupdate_date')->nullable();
+            $table->string('path')->nullable();
             $table->timestamps();
         });
     }
