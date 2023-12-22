@@ -186,7 +186,10 @@
            
 
                         </div>
-                        <div class="card-body">
+                        @foreach ($subsets as $subset)
+                          
+                        {{ $subset->name }} - {{ $subset->value }} <br>
+                        {{-- <div class="card-body">
                
                           <div class="row">
                               <div class="col">
@@ -233,8 +236,8 @@
                                   @endif
 
                           </div>
-                </div>
-                
+                </div> --}}
+                @endforeach
             </div>
             <br>
 

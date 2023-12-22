@@ -182,148 +182,171 @@ class UserController extends Controller
         $hruser = Auth::user();
         $staff = User::where('linemanager', $user->name)->get();
 
-        if ($user->contract == 'International') {
-            $balances = Balance::where('user_id', $user->id)->get();
-            $subsets = $balances->map(function ($balance) {
-                return collect($balance->toArray())
+        $leaveypes = Leavetype::where($user->contract,'yes')->pluck('name')->toArray();
+        // dd($leaveypes);
+        $balances = Balance::where('user_id', $user->id)->whereIn('name',$leaveypes)->get();
+        // dd($balances);
+        // $subsets = $balances->map(function ($balance) {
+        //     return collect($balance->toArray())
 
-                    ->only(['value', 'leavetype_id'])
-                    ->all();
-            });
-
-            //annual leave
-            $leave1 = $subsets->firstwhere('leavetype_id', '1');
-            $balance1 = round($leave1['value'], 3);
-
-            //sick leave sc
-            $leave4 = $subsets->firstwhere('leavetype_id', '4');
-            $balance4 = round($leave4['value'], 3);
-
-            //sick leave dc
-            $leave7 = $subsets->firstwhere('leavetype_id', '7');
-            $balance7 = round($leave7['value'], 3);
-
-            //maternity leave
-            $leave11 = $subsets->firstwhere('leavetype_id', '11');
-            $balance11 = round($leave11['value'], 3);
-
-            //paternity leave
-            $leave12 = $subsets->firstwhere('leavetype_id', '12');
-            $balance12 = round($leave12['value'], 3);
-
-            //compassionate/welfare leave
-            $leave13 = $subsets->firstwhere('leavetype_id', '13');
-            $balance13 = round($leave13['value'], 3);
-
-            //home leave
-            $leave16 = $subsets->firstwhere('leavetype_id', '16');
-            $balance16 = round($leave16['value'], 3);
-
-            //work from home
-            $leave22 = $subsets->firstwhere('leavetype_id', '22');
-            $balance22 = round($leave22['value'], 3);
-
-            //study leave
-            $leave23 = $subsets->firstwhere('leavetype_id', '23');
-            $balance23 = round($leave23['value'], 3);
-
+        //         ->only(['name','value', 'leavetype_id'])
+        //         ->all();
+        // });
+        // dd($balances);
             $leaves = Leave::where('user_id', $user->id)->get();
             $overtimes = Overtime::where('user_id', $user->id)->get();
 
             return view('admin.users.show', [
                 'user' => $user,
-                'balance1' => $balance1,
-                'balance4' => $balance4,
-                'balance7' => $balance7,
-                'balance11' => $balance11,
-                'balance12' => $balance12,
-                'balance13' => $balance13,
-                'balance16' => $balance16,
-                'balance22' => $balance22,
-                'balance23' => $balance23,
+                'subsets'=>$balances,
                 'leaves' => $leaves,
                 'overtimes' => $overtimes,
                 'employees' => $staff,
             ]);
-        } else {
-            $balances = Balance::where('user_id', $user->id)->get();
-            $subsets = $balances->map(function ($balance) {
-                return collect($balance->toArray())
 
-                    ->only(['value', 'leavetype_id'])
-                    ->all();
-            });
 
-            //annual leave
-            $leave1 = $subsets->firstwhere('leavetype_id', '1');
-            $balance1 = round($leave1['value'], 3);
+        // if ($user->contract == 'International') {
+        //     $balances = Balance::where('user_id', $user->id)->get();
+        //     $subsets = $balances->map(function ($balance) {
+        //         return collect($balance->toArray())
 
-            //sick leave sc
-            $leave4 = $subsets->firstwhere('leavetype_id', '4');
-            $balance4 = round($leave4['value'], 3);
+        //             ->only(['value', 'leavetype_id'])
+        //             ->all();
+        //     });
 
-            //sick leave dc
-            $leave7 = $subsets->firstwhere('leavetype_id', '7');
-            $balance7 = round($leave7['value'], 3);
+        //     //annual leave
+        //     $leave1 = $subsets->firstwhere('leavetype_id', '1');
+        //     $balance1 = round($leave1['value'], 3);
 
-            //marriage leave
-            $leave10 = $subsets->firstwhere('leavetype_id', '10');
-            $balance10 = round($leave10['value'], 3);
+        //     //sick leave sc
+        //     $leave4 = $subsets->firstwhere('leavetype_id', '4');
+        //     $balance4 = round($leave4['value'], 3);
 
-            //maternity leave
-            $leave11 = $subsets->firstwhere('leavetype_id', '11');
-            $balance11 = round($leave11['value'], 3);
+        //     //sick leave dc
+        //     $leave7 = $subsets->firstwhere('leavetype_id', '7');
+        //     $balance7 = round($leave7['value'], 3);
 
-            //paternity leave
-            $leave12 = $subsets->firstwhere('leavetype_id', '12');
-            $balance12 = round($leave12['value'], 3);
+        //     //maternity leave
+        //     $leave11 = $subsets->firstwhere('leavetype_id', '11');
+        //     $balance11 = round($leave11['value'], 3);
 
-            //compassionate/welfare leave
-            $leave13 = $subsets->firstwhere('leavetype_id', '13');
-            $balance13 = round($leave13['value'], 3);
+        //     //paternity leave
+        //     $leave12 = $subsets->firstwhere('leavetype_id', '12');
+        //     $balance12 = round($leave12['value'], 3);
 
-            //pilgiramge
-            $leave14 = $subsets->firstwhere('leavetype_id', '14');
-            $balance14 = round($leave14['value'], 3);
+        //     //compassionate/welfare leave
+        //     $leave13 = $subsets->firstwhere('leavetype_id', '13');
+        //     $balance13 = round($leave13['value'], 3);
 
-            //cto
-            $leave20 = $subsets->firstwhere('leavetype_id', '20');
-            $balance20 = round($leave20['value'], 3);
+        //     //home leave
+        //     $leave16 = $subsets->firstwhere('leavetype_id', '16');
+        //     $balance16 = round($leave16['value'], 3);
 
-            //work from home
-            $leave22 = $subsets->firstwhere('leavetype_id', '22');
-            $balance22 = round($leave22['value'], 3);
+        //     //work from home
+        //     $leave22 = $subsets->firstwhere('leavetype_id', '22');
+        //     $balance22 = round($leave22['value'], 3);
 
-            //study leave
-            $leave23 = $subsets->firstwhere('leavetype_id', '23');
-            $balance23 = round($leave23['value'], 3);
+        //     //study leave
+        //     $leave23 = $subsets->firstwhere('leavetype_id', '23');
+        //     $balance23 = round($leave23['value'], 3);
 
-            //Illness leave
-            $leave27 = $subsets->firstwhere('leavetype_id', '27');
-            $balance27 = round($leave27['value'], 3);
+        //     $leaves = Leave::where('user_id', $user->id)->get();
+        //     $overtimes = Overtime::where('user_id', $user->id)->get();
 
-            $leaves = Leave::where('user_id', $user->id)->get();
-            $overtimes = Overtime::where('user_id', $user->id)->get();
+        //     return view('admin.users.show', [
+        //         'user' => $user,
+        //         'balance1' => $balance1,
+        //         'balance4' => $balance4,
+        //         'balance7' => $balance7,
+        //         'balance11' => $balance11,
+        //         'balance12' => $balance12,
+        //         'balance13' => $balance13,
+        //         'balance16' => $balance16,
+        //         'balance22' => $balance22,
+        //         'balance23' => $balance23,
+        //         'leaves' => $leaves,
+        //         'overtimes' => $overtimes,
+        //         'employees' => $staff,
+        //     ]);
+        // } else {
+        //     $balances = Balance::where('user_id', $user->id)->get();
+        //     $subsets = $balances->map(function ($balance) {
+        //         return collect($balance->toArray())
 
-            return view('admin.users.show', [
-                'user' => $user,
-                'balance1' => $balance1,
-                'balance4' => $balance4,
-                'balance7' => $balance7,
-                'balance10' => $balance10,
-                'balance11' => $balance11,
-                'balance12' => $balance12,
-                'balance13' => $balance13,
-                'balance14' => $balance14,
-                'balance20' => $balance20,
-                'balance22' => $balance22,
-                'balance23' => $balance23,
-                'balance27' => $balance27,
-                'leaves' => $leaves,
-                'overtimes' => $overtimes,
-                'employees' => $staff,
-            ]);
-        }
+        //             ->only(['value', 'leavetype_id'])
+        //             ->all();
+        //     });
+
+        //     //annual leave
+        //     $leave1 = $subsets->firstwhere('leavetype_id', '1');
+        //     $balance1 = round($leave1['value'], 3);
+
+        //     //sick leave sc
+        //     $leave4 = $subsets->firstwhere('leavetype_id', '4');
+        //     $balance4 = round($leave4['value'], 3);
+
+        //     //sick leave dc
+        //     $leave7 = $subsets->firstwhere('leavetype_id', '7');
+        //     $balance7 = round($leave7['value'], 3);
+
+        //     //marriage leave
+        //     $leave10 = $subsets->firstwhere('leavetype_id', '10');
+        //     $balance10 = round($leave10['value'], 3);
+
+        //     //maternity leave
+        //     $leave11 = $subsets->firstwhere('leavetype_id', '11');
+        //     $balance11 = round($leave11['value'], 3);
+
+        //     //paternity leave
+        //     $leave12 = $subsets->firstwhere('leavetype_id', '12');
+        //     $balance12 = round($leave12['value'], 3);
+
+        //     //compassionate/welfare leave
+        //     $leave13 = $subsets->firstwhere('leavetype_id', '13');
+        //     $balance13 = round($leave13['value'], 3);
+
+        //     //pilgiramge
+        //     $leave14 = $subsets->firstwhere('leavetype_id', '14');
+        //     $balance14 = round($leave14['value'], 3);
+
+        //     //cto
+        //     $leave20 = $subsets->firstwhere('leavetype_id', '20');
+        //     $balance20 = round($leave20['value'], 3);
+
+        //     //work from home
+        //     $leave22 = $subsets->firstwhere('leavetype_id', '22');
+        //     $balance22 = round($leave22['value'], 3);
+
+        //     //study leave
+        //     $leave23 = $subsets->firstwhere('leavetype_id', '23');
+        //     $balance23 = round($leave23['value'], 3);
+
+        //     //Illness leave
+        //     $leave27 = $subsets->firstwhere('leavetype_id', '27');
+        //     $balance27 = round($leave27['value'], 3);
+
+        //     $leaves = Leave::where('user_id', $user->id)->get();
+        //     $overtimes = Overtime::where('user_id', $user->id)->get();
+
+        //     return view('admin.users.show', [
+        //         'user' => $user,
+        //         'balance1' => $balance1,
+        //         'balance4' => $balance4,
+        //         'balance7' => $balance7,
+        //         'balance10' => $balance10,
+        //         'balance11' => $balance11,
+        //         'balance12' => $balance12,
+        //         'balance13' => $balance13,
+        //         'balance14' => $balance14,
+        //         'balance20' => $balance20,
+        //         'balance22' => $balance22,
+        //         'balance23' => $balance23,
+        //         'balance27' => $balance27,
+        //         'leaves' => $leaves,
+        //         'overtimes' => $overtimes,
+        //         'employees' => $staff,
+        //     ]);
+        // }
 
     }
 
