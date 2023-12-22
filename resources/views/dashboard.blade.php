@@ -47,7 +47,7 @@
                                 <br>
                                 <strong>{{__('welcome.contractType')}}: </strong> {{$user->contract}}
                                 <br>
-                                <strong>{{__('welcome.office')}}: </strong> {{$user->office}}
+                                {{-- <strong>{{__('welcome.office')}}: </strong> {{$user->office}} --}}
                               </div>
                               <div class="col">
 
@@ -76,10 +76,10 @@
                           <div class="row">
                               <div class="col">
                               @if ($user->contract == "International")
-                              <strong>{{__('welcome.homeleave')}}:</strong> {{$balance12}}
+                              <strong>{{__('welcome.homeleave')}}:</strong> {{$balance16}}
                                   <br>
-                                  <strong>{{__('welcome.r&r')}}:</strong> {{$balance11}}
-                                  <br>
+                                  {{-- <strong>{{__('welcome.r&r')}}:</strong> {{$balance11}}
+                                  <br> --}}
                                   <strong>{{__('welcome.annualLeave')}}:</strong> {{$balance1}}
                               @endif
                               @if ($user->contract == "National")
@@ -87,7 +87,7 @@
                                   <br>
                                   {{--<strong>{{__('welcome.sickLeave')}}:</strong> {{$balance2}}
                                   <br> --}}
-                                  <strong>{{__('welcome.compensationLeaveDays')}}:</strong> {{$balance18}} - <a href="{{ route('comlists.index') }}"><strong>({{__('comlists.dashboard')}})</strong></a>
+                                <strong>{{__('welcome.compensationLeaveDays')}}:</strong> {{$balance20}} - <a href="{{ route('comlists.index') }}"><strong>({{__('comlists.dashboard')}})</strong></a>
 @endif
                                 </div>
 
@@ -115,3 +115,4 @@
     });
   </script> --}}
 @endpush
+
