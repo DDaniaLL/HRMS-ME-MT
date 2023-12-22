@@ -60,6 +60,7 @@ class User extends Authenticatable
         'password',
         'linemanager',
         'usertype_id',
+        'office_id',
         'hradmin',
         'token',
     ];

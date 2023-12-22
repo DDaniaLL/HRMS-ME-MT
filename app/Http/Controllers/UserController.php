@@ -9,6 +9,7 @@ use App\Mail\Balance as MailBalance;
 use App\Models\Balance;
 use App\Models\Leave;
 use App\Models\Leavetype;
+use App\Models\Office;
 use App\Models\Overtime;
 use App\Models\User;
 use Carbon\Carbon;
@@ -54,9 +55,11 @@ class UserController extends Controller
     public function create()
     {
         $users = User::all();
+        $offices = Office::all();
+        // dd($offices);
         $contract_enddate = date('Y-12-31');
 
-        return view('admin.users.create', ['users' => $users, 'contract_enddate' => $contract_enddate]);
+        return view('admin.users.create', ['users' => $users, 'contract_enddate' => $contract_enddate,'offices'=>$offices]);
     }
 
     public function store(Request $request)
@@ -68,6 +71,7 @@ class UserController extends Controller
             'grade' => 'required',
             'position',
             'department',
+            'office' => 'required',
             'joined_date' => 'required',
             // 'contract_enddate' => 'required',
             'linemanager',
@@ -81,6 +85,8 @@ class UserController extends Controller
         $user->employee_number = $request->employee_number;
         $user->contract = $request->contract;
         $user->position = $request->position;
+        $user->office = $request->office;
+        $user->office_id = Office::where('name',$request->office)->first()->id;
         $user->department = $request->department;
         $user->grade = $request->grade;
         $user->linemanager = $request->linemanager;
@@ -90,6 +96,7 @@ class UserController extends Controller
         // $user->password = Hash::make($request->password);
 
         $user->save();
+        
 
         $year = date('Y', strtotime($user->joined_date));
         $day = date('d', strtotime($user->joined_date));

@@ -114,8 +114,8 @@ $authuser = Auth::user();
 </select>
 
 @endif
-@if ($authuser->office == "CO-Erbil")
-<select class="form-control form-outline" id="office" name="office" aria-label="Default select example" >
+@if ($authuser->Office->isco == "yes")
+{{-- <select class="form-control form-outline" id="office" name="office" aria-label="Default select example" >
 
 <option value selected disabled ="">{{__('createUser.choose')}} {{__('createUser.office')}}..</option>
 
@@ -125,7 +125,13 @@ $authuser = Auth::user();
 <option value="CIAO" @if (old('office') == "CIAO") {{ 'selected' }} @endif>CIAO</option>
 <option value="SIAO" @if (old('office') == "SIAO") {{ 'selected' }} @endif>SIAO</option>
 
-</select>
+</select> --}}
+<select class="form-control form-outline" id="office" name="office" aria-label="Default select example" >
+  <option value selected disabled ="">{{__('createUser.chooseoffice')}} {{__('createUser.office')}}..</option>
+                                            @foreach ($offices as $office)
+                                                <option value="{{ $office->name }}">{{$office->name}} </option>
+                                            @endforeach
+                                          </select> 
 
 @endif
                                         @if ($errors->has('office'))

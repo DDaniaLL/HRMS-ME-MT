@@ -13,8 +13,17 @@ class OfficeController extends Controller
      */
     public function index()
     {
-        $office = Office::all();
-        return view('admin.offices.index', ['offices' => $office]);
+
+        $authuser = Auth::user();
+      
+        if($authuser->Office->isco == "yes"){
+            $office = Office::all();
+            return view('admin.offices.index', ['offices' => $office]);
+        }
+        else {
+            abort(403);
+        }
+      
     }
 
     /**
