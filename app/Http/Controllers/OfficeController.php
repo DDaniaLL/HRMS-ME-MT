@@ -17,8 +17,8 @@ class OfficeController extends Controller
         $authuser = Auth::user();
       
         if($authuser->Office->isco == "yes"){
-            $office = Office::all();
-            return view('admin.offices.index', ['offices' => $office]);
+            $offices = Office::all();
+            return view('admin.offices.index', ['offices' => $offices]);
         }
         else {
             abort(403);

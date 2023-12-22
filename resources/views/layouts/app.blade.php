@@ -396,13 +396,35 @@
   </li>
 
   <div class="dropdown-divider" style="border-color:rgb(77, 77, 77);"></div>
-  <li class="nav-item">
-    <a class="nav-link {{ $activePage == 'offices' ? ' active' : '' }}" href="{{ route('admin.offices.index') }}">
-        <i class="fas fa-file-alt nav-icon"></i>
-        <p>{{ __('sidebar.systemsettings') }}</p>
+  <li class="nav-item {{ $activePage == 'offices'||$activePage == 'leavetypes' ? ' menu-open' : ''  }}">
+    <a href="#" class="nav-link {{ $activePage == 'offices'||$activePage == 'leavetypes' ? ' active' : '' }}" >
+        <i class="fas fa-users nav-icon"></i>
+      <p>{{ __('sidebar.systemsettings') }}
+        <i class="fas fa-angle-down right"></i>
+      </p>
     </a>
+
+      <ul class="nav nav-treeview ">
+        <li class="nav-item" >
+          <a class="nav-link {{ $activePage == 'offices' ? ' active' : '' }}" href="{{ route('admin.offices.index') }}">
+            <i style="padding-left:20px" class="fas fa-user-plus nav-icon"></i>
+            <p style="padding-left:20px">{{ __('sidebar.officessettings') }}</p>
+          </a>
+        </li>
+        <li class="nav-item" >
+          <a class="nav-link {{ $activePage == 'leavetypes' ? ' active' : '' }}" href="{{ route('admin.leavetypes.index') }}">
+            <i style="padding-left:20px" class="fas fa-address-book nav-icon"></i>
+            <p style="padding-left:20px">{{ __('sidebar.leavetypes') }}</p>
+          </a>
+        </li>
+      </ul>
+
   </li>
 
+
+
+
+{{-- </ul> --}}
     </ul>
   </nav>
   <!-- /.sidebar-menu -->

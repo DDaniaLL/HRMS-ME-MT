@@ -8,6 +8,7 @@ use App\Http\Controllers\ChangePassword;
 use App\Http\Controllers\ComlistController;
 use App\Http\Controllers\HolidayController;
 use App\Http\Controllers\LeaveController;
+use App\Http\Controllers\LeavetypeController;
 use App\Http\Controllers\OfficeController;
 use App\Http\Controllers\OvertimeController;
 use App\Http\Controllers\PolicyController;
@@ -615,6 +616,10 @@ Route::group(['middleware' => ['auth', 'checkstatus'], 'prefix' => '/admin', 'as
 
 Route::group(['middleware' => ['auth', 'checkstatus'], 'prefix' => '/admin', 'as' => 'admin.'], function () {
     Route::resource('offices', OfficeController::class);
+});
+
+Route::group(['middleware' => ['auth', 'checkstatus'], 'prefix' => '/admin', 'as' => 'admin.'], function () {
+    Route::resource('leavetypes', LeavetypeController::class);
 });
 
 Route::group(['middleware' => ['auth', 'checkstatus'], 'prefix' => '/admin', 'as' => 'admin.'], function () {

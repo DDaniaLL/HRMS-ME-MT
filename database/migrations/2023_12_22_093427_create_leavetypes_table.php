@@ -13,8 +13,14 @@ return new class extends Migration
     {
         Schema::create('leavetypes', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('name')->unique();
             $table->float('value')->nullable();
+            $table->string('active')->nullable();
+            $table->string('accrualtype')->nullable();
+            $table->string('national')->nullable();
+            $table->string('international')->nullable();
+            $table->string('service')->nullable();
+            $table->string('custom')->nullable();
             $table->timestamps();
         });
     }

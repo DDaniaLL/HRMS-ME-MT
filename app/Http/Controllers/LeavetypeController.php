@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Leavetype;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class LeavetypeController extends Controller
 {
@@ -12,7 +13,9 @@ class LeavetypeController extends Controller
      */
     public function index()
     {
-        //
+        $leavetypes = Leavetype::all();
+        return view('admin.leavetypes.index', ['leavetypes' => $leavetypes]);
+
     }
 
     /**
@@ -20,7 +23,15 @@ class LeavetypeController extends Controller
      */
     public function create()
     {
-        //
+        $authuser = Auth::user();
+        if ($authuser->hradmin == "yes")
+        {
+            return view('admin.leavetypes.create');
+        }
+        else
+        {
+            abort(403);
+        }
     }
 
     /**
@@ -28,7 +39,29 @@ class LeavetypeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $authuser = Auth::user();
+        if ($authuser->hradmin !== "yes")
+        {
+            abort(403);
+        }
+        else
+        {
+            $request->validate([
+                'name' => 'required|unique:leavetypes,name',
+                'value',
+                
+            ]);
+       
+            $leavetype = new Leavetype();
+            $leavetype->name = $request->name;
+            $leavetype->value = $request->value;
+            $leavetype->save();
+
+
+    
+            $leavetypes = Leavetype::all();
+            return view('admin.leavetypes.index', ['leavetypes' => $leavetypes]);
+        }
     }
 
     /**
