@@ -22,6 +22,16 @@ return new class extends Migration
             $table->string('service')->nullable();
             $table->string('custom')->nullable();
             $table->string('order')->nullable();
+            $table->string('canusercarryover')->nullable();
+            $table->string('canpartial')->nullable();
+            $table->string('canoverlap')->nullable();
+            $table->string('iscalendardays')->nullable();
+            $table->string('needservicedays')->nullable();
+            $table->string('needsattachment')->nullable();
+            $table->string('needscomment')->nullable();
+            $table->string('maxperrequest')->nullable();
+            $table->string('issicksc')->nullable();
+            $table->string('iscarryover')->nullable();
             $table->timestamps();
         });
     }

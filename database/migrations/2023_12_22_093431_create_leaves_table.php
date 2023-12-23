@@ -17,6 +17,7 @@ return new class extends Migration
             $table->date('start_date')->nullable();
             $table->date('end_date')->nullable();
             $table->string('days')->nullable();
+            $table->string('ispartial')->nullable();
             $table->string('hours')->nullable();
             $table->string('reason')->nullable();
             $table->string('lmapprover')->nullable();
