@@ -340,7 +340,7 @@ $('#leavetype_id').on('change',function(){
 
   }
 
-    else if ($(this).val() == '13' || $(this).val() == '14' || $(this).val() == '16' || $(this).val() == '17' || $(this).val() == '20' || $(this).val() == '21' || $(this).val() == '4' || $(this).val() == '6') {
+    else if ($(this).val() == '13' || $(this).val() == '14' || $(this).val() == '16' || $(this).val() == '17' || $(this).val() == '20' || $(this).val() == '21' || $(this).val() == '4999' || $(this).val() == '6') {
         $('#end_date').prop('readonly',true);
         $('#numofdays').hide();
         $('#labelnumofdays').hide();
@@ -385,7 +385,7 @@ $('#leavetype_id').on('change',function(){
 $('#end_date,#start_date').on('change',function(){
 
 
-  if ($('#leavetype_id').val() == '12')
+  if ($('#leavetype_id').val() == '10')
   {
     $("#numofdays").val(2);
   }

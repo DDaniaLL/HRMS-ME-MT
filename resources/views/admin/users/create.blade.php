@@ -231,12 +231,12 @@ $authuser = Auth::user();
                                             {{__('createUser.InternationalContract')}}
                                             </label>
                                           </div> 
-                                          <div class="form-check">
+                                          {{-- <div class="form-check">
                                             <input  class="btn-check" type="radio" name="contract" Value="NA" id="na" @if (old('contract') == "NA") {{ 'checked' }} @endif>
                                             <label class="form-check-label" for="na">
                                             {{__('createUser.notAvaillable')}}
                                             </label>
-                                          </div> 
+                                          </div>  --}}
                                         </div>
                                        
 

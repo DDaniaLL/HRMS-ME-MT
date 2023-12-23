@@ -396,15 +396,7 @@ Route::group(['middleware' => ['auth', 'checkstatus']], function () {
         $leave1 = $subsets->firstwhere('leavetype_id', '1');
         $balance1 = round($leave1['value'], 3);
 
-        //international home leave
-        $leave16 = $subsets->firstwhere('leavetype_id', '16');
-        $balance16 = round($leave16['value'], 3);
-
-        //national CTO
-        $leave20 = $subsets->firstwhere('leavetype_id', '20');
-        $balance20 = round($leave20['value'], 3);
-
-        return view('dashboard', ['user' => $user, 'balance1' => $balance1, 'balance16' => $balance16, 'balance20' => $balance20]);
+        return view('dashboard', ['user' => $user, 'balance1' => $balance1]);
     })->name('welcome');
 
     Route::get('leaves/approval', function () {

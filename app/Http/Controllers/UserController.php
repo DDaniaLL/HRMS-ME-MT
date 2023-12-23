@@ -137,7 +137,7 @@ class UserController extends Controller
         $leavetypes = Leavetype::all();
         foreach ($leavetypes as $leavetype) {
 
-            if ($leavetype->name == 'Annual leave') {
+            if ($leavetype->name == 'Annual leave' AND $leavetype->accrualtype == "monthly") {
                 $user->balances()->create([
 
                     'name' => $leavetype->name,
@@ -145,21 +145,6 @@ class UserController extends Controller
                     'leavetype_id' => $leavetype->id,
                 ]);
 
-            } elseif ($leavetype->name == 'Annual leave - First half') {
-                $user->balances()->create([
-
-                    'name' => $leavetype->name,
-                    'value' => 0,
-                    'leavetype_id' => $leavetype->id,
-                ]);
-
-            } elseif ($leavetype->name == 'Annual leave - Second half') {
-                $user->balances()->create([
-
-                    'name' => $leavetype->name,
-                    'value' => 0,
-                    'leavetype_id' => $leavetype->id,
-                ]);
             } else {
                 $user->balances()->create([
                     'name' => $leavetype->name,
@@ -182,9 +167,9 @@ class UserController extends Controller
         $hruser = Auth::user();
         $staff = User::where('linemanager', $user->name)->get();
 
-        $leaveypes = Leavetype::where($user->contract,'yes')->pluck('name')->toArray();
+        $leavetypes = Leavetype::where($user->contract,'yes')->pluck('name')->toArray();
         // dd($leaveypes);
-        $balances = Balance::where('user_id', $user->id)->whereIn('name',$leaveypes)->get();
+        $balances = Balance::where('user_id', $user->id)->whereIn('name',$leavetypes)->get();
         // dd($balances);
         // $subsets = $balances->map(function ($balance) {
         //     return collect($balance->toArray())

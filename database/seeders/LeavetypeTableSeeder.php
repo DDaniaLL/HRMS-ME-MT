@@ -14,11 +14,12 @@ class LeavetypeTableSeeder extends Seeder
      */
     public function run()
     {
+        //iraq based system requirements
         // id=1
         DB::table('leavetypes')->insert([
             'name' => 'Annual leave',
             'value' => '20',
-            'canusercarryover' => 'yes',
+            'canusecarryover' => 'yes',
             'canpartial' => 'partial',
             'needservicedays' => '90',
             'created_at' => now(),
@@ -31,7 +32,7 @@ class LeavetypeTableSeeder extends Seeder
             'value' => '4',
             'issicksc'=>'yes',
             'needscomment'=>'yes',
-            'needsattachment'=>'2',
+            'maxperrequest' => '3',
             'canpartial'=>'partial',
             'created_at' => now(),
             'updated_at' => now(),

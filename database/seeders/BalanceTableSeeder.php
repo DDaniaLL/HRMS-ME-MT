@@ -74,7 +74,7 @@ class BalanceTableSeeder extends Seeder
             'name' => 'Welfare',
             'leavetype_id' => '7',
             'user_id' => '1',
-            'value' => '3',
+            'value' => '9',
             'created_at' => now(),
             'updated_at' => now(),
         ]);
@@ -92,7 +92,7 @@ class BalanceTableSeeder extends Seeder
             'name' => 'R&R',
             'leavetype_id' => '9',
             'user_id' => '1',
-            'value' => '30',
+            'value' => '0',
             'created_at' => now(),
             'updated_at' => now(),
         ]);

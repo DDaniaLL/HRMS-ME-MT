@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('service')->nullable();
             $table->string('custom')->nullable();
             $table->string('order')->nullable();
-            $table->string('canusercarryover')->nullable();
+            $table->string('canusecarryover')->nullable();
             $table->string('canpartial')->nullable();
             $table->string('canoverlap')->nullable();
             $table->string('iscalendardays')->nullable();
