@@ -14,6 +14,7 @@ return [
     'hours' => 'Hours',
     'between' => 'between',
     'and' => 'and',
+    'halfday' => 'Half day',
     'attachment' => 'Attachment',
     'chooseFile' => 'Choose File',
     'noFileChosen' => 'no file chosen',

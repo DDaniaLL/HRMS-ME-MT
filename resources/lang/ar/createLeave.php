@@ -16,6 +16,7 @@ return [
     'substaff' => 'عوضاً عن',
     'wfh' => 'العمل من المنزل',
     'and' => 'و',
+    'halfday' => 'نصف يوم',
     'welfare' => 'اجازة الرعاية',
     'attachment' => 'الملف المرفق',
     'chooseFile' => 'اختيار ملف',

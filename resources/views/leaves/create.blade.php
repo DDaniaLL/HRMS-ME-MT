@@ -136,6 +136,21 @@
                                         </div>
 
                                         <div class="row justify-content-between text-left">
+                                          <div class="form-check ml-3 mb-2 col-sm-2 flex-column d-flex">
+                                            <label class="form-check-label px-1" id="labelispartial" for="ispartial">{{__('createLeave.halfday')}}</label>
+                                            <input class="form-check-input  pull-right" type="checkbox" id="ispartial" name="ispartial" placeholder="">
+                                              </div>    
+                                      </div>
+                                      <div class="row justify-content-between text-left">
+                                        <div class="form-check ml-3 mb-2 col-sm-2 flex-column d-flex">
+                                          <label class="form-check-label px-1" id="labelishour" for="ishour">{{__('createLeave.hours')}}</label>
+                                          <input class="form-check-input  pull-right" type="checkbox" id="ishour" name="ispartial" placeholder="">
+                                            </div>    
+                                    </div>
+
+                                      
+
+                                        <div class="row justify-content-between text-left">
                                             <div class="form-group {{ $errors->has('start_date') ? ' has-danger' : '' }} col-sm-6 flex-column d-flex">
                                                  <label class="form-control-label required px-1">{{__('createLeave.startDate')}}</label>
                                                  <input class="form-control form-outline  {{ $errors->has('start_date') ? ' is-invalid' : '' }} " type="date" id="start_date"  name="start_date" placeholder="">
@@ -188,15 +203,7 @@
                                             {{-- <a href="#" id="output" class="btn btn-sm btn-primary"></a> --}}
 
                                         </div>
-                                        <div id="note" class="row justify-content-center">
-                                        <h5 style='border-radius: 7px; padding:5px; border:2px orange solid; font-size:17px; width:fit-content; width:-webkit-fit-content; width:-moz-fit-content;'>{{__('createOvertime.note')}}</h5>
-                                        </div>
-
-
-                                        <div id="note2" class="row justify-content-center">
-                                          <h5 style='border-radius: 7px; padding:5px; border:2px orange solid; font-size:17px; width:fit-content; width:-webkit-fit-content; width:-moz-fit-content;'>{{__('createOvertime.note2')}}</h5>
-                                          </div>
-
+                                    
                                         <div class="row justify-content-center">
                                             <div class="justify-content-center form-group col-sm-2"> <button type="submit" class="disabled btn-1">{{__('createLeave.submit')}}</button> </div>
                                             <div class="form-group col-sm-3"> <a class="btn btn-outline-danger" href="{{route('leaves.index')}}" >{{__('createLeave.cancel')}}</a> </div>
@@ -290,69 +297,93 @@ $('form').submit(function(){
   $(this).find(':submit').attr('disabled','disabled');
 });
 
+$('#labelishour').hide();
+    $('#ishour').hide();
 
-// $(document).on('change', 'leavetype_id', function () {
-//   $("input[type=date]").val("");
-// });
 
-$('#note').hide();
-$('#note2').hide();
-  $('#hourslabel').hide();
+        $('#hourslabel').hide();
         $('#hours').hide();
         $('#minus').hide();
         $('#plus').hide();
-$('#reset').hide();
+        $('#reset').hide();
 
   var sickpercentage;
 //   $('.disable').click(function(){
 //    $(this).prop('disabled', true);
 // });
 
-$('form').submit(function(){
-  $(this).find(':submit').attr('disabled','disabled');
-});
-
-
+partialleaves = {{ $partialleaves }};
+iscalendardays = {{$iscalendardays}};
+homeleave = {{$homeleave}};
+hourleave = {{$hourleave}};
+console.log(hourleave);
 
 
 $('#leavetype_id').on('change',function(){
-
+  console.log($('#leavetype_id').val());
+  if (jQuery.inArray(parseInt($('#leavetype_id').val(),10), partialleaves) === -1)
+  {
+    $('#labelispartial').hide();
+    $('#ispartial').hide();
+  }
+  
   // $('#leavetype_id').prop("disabled", true); 
   // $('#leavetype_id').prop('disabled', 'disabled');
   $('#start_date').val("");
   $('#end_date').val("");
   $('.dropdown-toggle').prop('disabled', true);
   $('#reset').show();
-
-  
-
-  if ($(this).val() == '2' || $(this).val() == '20' || $(this).val() == '21')
-  {
-    $('#note2').show();
-  }
-
  
+  if ($('#leavetype_id').val() == hourleave)
+  {
+    $('#labelishour').show();
+    $('#ishour').show();
 
-  if ($(this).val() == '3' || $(this).val() == '15' || $(this).val() == '8' || $(this).val() == '10')
+        // $('#end_date').prop('readonly',true);
+        // $('#numofdays').hide();
+        // $('#labelnumofdays').hide();
+        // sickpercentage = "no";
+        // $('#hourslabel').show();
+        // $('#hours').show();
+        // $('#minus').show();
+        // $('#plus').show();
+  }
+  
+  if (jQuery.inArray(parseInt($('#leavetype_id').val(),10), iscalendardays) !== -1)
   {
     sickpercentage = "yes";
-    
-
   }
+    
+   
+});
 
-    else if ($(this).val() == '13' || $(this).val() == '14' || $(this).val() == '16' || $(this).val() == '17' || $(this).val() == '20' || $(this).val() == '21' || $(this).val() == '4999' || $(this).val() == '6') {
-        $('#end_date').prop('readonly',true);
+$('#ispartial').on('click',function(){
+  $('#start_date').val("");
+  $('#end_date').val("");
+  if ($('#ispartial').is(':checked'))
+  {
+    $('#end_date').prop('readonly',true);
         $('#numofdays').hide();
         $('#labelnumofdays').hide();
         sickpercentage = "no";
-    }
-    else if ($(this).val() == '7')
-    {
-      $('#note').show();
-    }
-//19 is the comensation hour leave
-    else if ($(this).val() == '19') {
-      $('#end_date').prop('readonly',true);
+        $('.dropdown-toggle').prop('disabled', true);
+        $('#reset').show();
+  }
+  else 
+  {
+    $('#end_date').prop('readonly',false);
+        $('#numofdays').show();
+        $('#labelnumofdays').show();
+  }
+});
+
+
+$('#ishour').on('click',function(){
+  $('#start_date').val("");
+  $('#end_date').val("");
+  if ($('#ishour').is(':checked'))
+  {
+    $('#end_date').prop('readonly',true);
         $('#numofdays').hide();
         $('#labelnumofdays').hide();
         sickpercentage = "no";
@@ -360,9 +391,10 @@ $('#leavetype_id').on('change',function(){
         $('#hours').show();
         $('#minus').show();
         $('#plus').show();
-    }
-    else {
-        $('#end_date').prop('readonly',false);
+  }
+  else 
+  {
+    $('#end_date').prop('readonly',false);
         $('#numofdays').show();
         $('#labelnumofdays').show();
         $('#hourslabel').hide();
@@ -370,8 +402,14 @@ $('#leavetype_id').on('change',function(){
         $('#minus').hide();
         $('#plus').hide();
         sickpercentage = "no";
-    }
-    if ($('#end_date').is('[readonly]')) {
+  }
+});
+
+
+
+
+$('#start_date').on('click',function(){
+  if ($('#end_date').is('[readonly]')) {
       //make the text in end_date the same as start_date
    var myInput = $('#start_date');
    myInput.change(function() {
@@ -380,12 +418,10 @@ $('#leavetype_id').on('change',function(){
     }
 });
 
-
-
 $('#end_date,#start_date').on('change',function(){
 
 
-  if ($('#leavetype_id').val() == '10')
+  if ($('#leavetype_id').val() == homeleave)
   {
     $("#numofdays").val(2);
   }
@@ -558,10 +594,6 @@ if (sickpercentage == 'yes')
 //   }
 
   }
-
-
-
-
 });
 
 
@@ -585,47 +617,7 @@ $('.minus').click(function () {
 				$input.change();
 				return false;
 			});
-// function dateDifference(start, end) {
-
-// // Copy date objects so don't modify originals
-// var s = new Date(+start);
-// var e = new Date(+end);
-
-// // Set time to midday to avoid dalight saving and browser quirks
-// s.setHours(12,0,0,0);
-// e.setHours(12,0,0,0);
-
-// // Get the difference in whole days
-// var totalDays = Math.round((e - s) / 8.64e7);
-
-// // Get the difference in whole weeks
-// var wholeWeeks = totalDays / 7 | 0;
-
-// // Estimate business days as number of whole weeks * 5
-// var days = wholeWeeks * 5;
-
-// // If not even number of weeks, calc remaining weekend days
-// if (totalDays % 7) {
-//   s.setDate(s.getDate() + wholeWeeks * 7);
-
-//   while (s < e) {
-//     s.setDate(s.getDate() + 1);
-
-//     // If day isn't a Sunday or Saturday, add to business days
-//     if (s.getDay() != 0 && s.getDay() != 6) {
-//       ++days;
-//     }
-//   }
-// }
-// return days;
-// }
-
 });
-
-
-// asdasdasdasdasdasd
-
-
 
 </script>
 
