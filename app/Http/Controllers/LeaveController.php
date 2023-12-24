@@ -62,9 +62,9 @@ class LeaveController extends Controller
             $hourleave = Leavetype::where($user->contract,'yes')->where('canpartial','hour')->pluck('id');
             $iscalendardays = Leavetype::where($user->contract,'yes')->where('iscalendardays','!=',null)->pluck('id');
             $homeleave = Leavetype::where('name','Home Leave')->pluck('id');
-            // dd($partialleaves);
+    
             return view('leaves.create', ['leavetypes' => $leavetypes,'partialleaves' => $partialleaves,'iscalendardays'=>$iscalendardays,'homeleave'=>$homeleave,'hourleave'=>$hourleave]);
-            // return view('leaves.create', ['leavetypes' => $leavetypes,'userss' => $userss]);
+          
         
     }
 
