@@ -34,11 +34,11 @@ class LeaveController extends Controller
     public function index()
     {
         $user = Auth::user();
-        // $leave = Leave::where('user_id', $user->id)->get();
-        $leave = $user->leaves;
-        $variable = '';
+        $leave = Leave::where('user_id', $user->id)->with('leavetype')->get();
+        // $leave = $user->leaves->with('leavetype');
+    
 
-        return view('leaves.index', ['leaves' => $leave, 'variable' => $variable]);
+        return view('leaves.index', ['leaves' => $leave]);
     }
 
     /**
