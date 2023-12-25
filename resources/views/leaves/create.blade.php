@@ -169,7 +169,7 @@
                                                 <div class="form-group col-sm-4 flex-column d-flex">
                                                     <label  id="hourslabel" class="form-control-label required px-1">{{__('createLeave.hours')}}<small>({{__('createLeave.between')}} 1 {{__('createLeave.and')}} 7)</small></label>
                                                     <span  id="minus" class="minus">-</span>
-                                                    <input  type="text" id="hours" name="hours" required readonly value="1"/>
+                                                    <input  type="text" id="hours" name="hours" required readonly value="0"/>
                                                     <span  class="plus" id="plus">+</span>
                                                     
                                                     
@@ -281,7 +281,7 @@
 $(document).ready(function() {
   setTimeout(function() {
     $("div.error").fadeOut('slow');
-}, 2000); 
+}, 3000); 
  
 
 $(document).on('click', '.btn-1', function () {
@@ -336,6 +336,7 @@ $('#leavetype_id').on('change',function(){
  
   if ($('#leavetype_id').val() == hourleave)
   {
+    
     $('#labelishour').show();
     $('#ishour').show();
 
@@ -381,6 +382,7 @@ $('#ispartial').on('click',function(){
 $('#ishour').on('click',function(){
   $('#start_date').val("");
   $('#end_date').val("");
+  
   if ($('#ishour').is(':checked'))
   {
     $('#end_date').prop('readonly',true);
@@ -391,6 +393,7 @@ $('#ishour').on('click',function(){
         $('#hours').show();
         $('#minus').show();
         $('#plus').show();
+        $('#hours').val("1");
   }
   else 
   {
@@ -401,6 +404,7 @@ $('#ishour').on('click',function(){
         $('#hours').hide();
         $('#minus').hide();
         $('#plus').hide();
+        $('#hours').val("0");
         sickpercentage = "no";
   }
 });
@@ -600,7 +604,7 @@ if (sickpercentage == 'yes')
 $('.minus').click(function () {
 				var $input = $(this).parent().find('input');
 				var count = parseInt($input.val()) - 1;
-				count = count < 1 ? 1 : count;
+				count = count < 0 ? 0 : count;
 				$input.val(count);
 				$input.change();
 				return false;

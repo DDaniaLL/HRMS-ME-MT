@@ -282,19 +282,22 @@ class LeaveController extends Controller
         // if ($request->hasFile('file')) {
         //     $leave->path = $path;
         // }
-        if ($leavetype->iscalendardays == "yes")
-        {
-            $leave->days = $sickpercentagedays;
-        }
-        else if ($leavetype->canpartial =='hour' AND $request->hours !== null)
+        
+       
+        if ($leavetype->canpartial =='hour' AND $request->hours !== '0')
         {
             $leave->hours = $hours;
             $leave->days = $leave->hours / 8;
         }
-        else if ($leavetype->canpartial =='partial' AND $request->ispartial !== null)
+        else if ($leavetype->canpartial == 'partial' AND $request->ispartial !== null)
         {
-            $leave->ispartial == "yes";
+            
+            $leave->ispartial = "yes";
             $leave->days = '0.5';
+        }
+        else if ($leavetype->iscalendardays == "yes")
+        {
+            $leave->days = $sickpercentagedays;
         }
         else
         {
