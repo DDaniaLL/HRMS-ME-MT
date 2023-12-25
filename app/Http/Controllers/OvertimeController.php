@@ -20,11 +20,7 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class OvertimeController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+  
     public function index()
     {
         $user = Auth::user();
@@ -33,32 +29,17 @@ class OvertimeController extends Controller
         return view('overtimes.index', ['overtimes' => $overtime]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
-        // $user = Auth::user();
-        // $overtime = Overtime::where('user_id', $user->id)->get();
-        // return view('overtimes.index', ['overtimes' => $overtime]);
         $user = Auth::user();
         $userss = User::where([
             ['linemanager', $user->name],
             ['grade' ,'<', 3],
             ])->get();
-
-
         return view('overtimes.create',['userss' => $userss]);
-
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @return \Illuminate\Http\Response
-     */
+   
     public function store(Request $request)
     {
         

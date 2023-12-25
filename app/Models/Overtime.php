@@ -25,11 +25,17 @@ class Overtime extends Model
         'start_hour',
         'end_hour',
         'reason',
+        'overtimetype_id',
     ];
 
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+    public function overtimetype()
+    {
+        return $this->belongsTo(Overtimetype::class);
+
     }
 
     public function comlists()

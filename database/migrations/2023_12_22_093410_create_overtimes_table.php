@@ -34,6 +34,7 @@ return new class extends Migration
             $table->date('cancelled_date')->nullable();
             $table->softDeletes();
             $table->foreignId('user_id');
+            $table->foreignId('overtimetype_id');
             $table->timestamps();
         });
     }
