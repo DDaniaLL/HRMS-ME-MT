@@ -41,7 +41,7 @@ class AppServiceProvider extends ServiceProvider
                     $user = Auth::user();
                     $staff = User::where('linemanager', $user->name)->get();
 
-                    if (count($staff)) {
+                    if (count($staff) > 0) {
                         $subsets = $staff->map(function ($staff) {
                             return collect($staff->toArray())
                                 ->only(['id'])
@@ -69,8 +69,8 @@ class AppServiceProvider extends ServiceProvider
                         $numapproval = $numleaveapproval + $numoverapproval;
 
                         if ($user->office == 'CO-Erbil') {
-                            $hrleaves = Leave::where('status', 'Pending HR Approval')->orWhere('status', 'Approved by extra Approval')->orWhere('status', 'Declined by extra Approval')->get();
-                            $hrovertimes = Overtime::where('status', 'Pending HR Approval')->orWhere('status', 'Approved by extra Approval')->orWhere('status', 'Declined by extra Approval')->get();
+                            $hrleaves = Leave::where('status', 'Pending HR Approval')->orWhere('status', 'Approved by extra Approval')->orWhere('status', 'Declined by extra Approval')->with('user','leavetype')->get();
+                            $hrovertimes = Overtime::where('status', 'Pending HR Approval')->orWhere('status', 'Approved by extra Approval')->orWhere('status', 'Declined by extra Approval')->with('user')->get();
                             $numleavehrapproval = count($hrleaves);
                             $numoverhrapproval = count($hrovertimes);
                             $numhrapproval = $numleavehrapproval + $numoverhrapproval;
@@ -83,7 +83,7 @@ class AppServiceProvider extends ServiceProvider
                                 ->with('numhrapproval', $numhrapproval);
                         } else { // if i am LM but not CO-Erbil HR
                             $staffwithsameoffice = User::where('office', $user->office)->get();
-                            if (count($staffwithsameoffice)) {
+                            if (count($staffwithsameoffice) > 0) {
                                 $hrsubsets = $staffwithsameoffice->map(function ($staffwithsameoffice) {
                                     return collect($staffwithsameoffice->toArray())
                                         ->only(['id'])
@@ -120,11 +120,12 @@ class AppServiceProvider extends ServiceProvider
 
                     } else {
                         // if i am not LM but still HR:
-
+                            if ($user->hradmin == 'yes')
+                            {
                         if ($user->office == 'CO-Erbil') {
                             // if i am CO-Erbil HR
-                            $hrleaves = Leave::where('status', 'Pending HR Approval')->orWhere('status', 'Approved by extra Approval')->orWhere('status', 'Declined by extra Approval')->get();
-                            $hrovertimes = Overtime::where('status', 'Pending HR Approval')->orWhere('status', 'Approved by extra Approval')->orWhere('status', 'Declined by extra Approval')->get();
+                            $hrleaves = Leave::where('status', 'Pending HR Approval')->orWhere('status', 'Approved by extra Approval')->orWhere('status', 'Declined by extra Approval')->with('user','leavetype')->get();
+                            $hrovertimes = Overtime::where('status', 'Pending HR Approval')->orWhere('status', 'Approved by extra Approval')->orWhere('status', 'Declined by extra Approval')->with('user')->get();
                             $numleavehrapproval = count($hrleaves);
                             $numoverhrapproval = count($hrovertimes);
                             $numhrapproval = $numleavehrapproval + $numoverhrapproval;
@@ -172,7 +173,16 @@ class AppServiceProvider extends ServiceProvider
                         }
 
                     }
-                    // if i am not LM and not HR no need to handle it becuse in the app layout it's not processed
+                    else
+                    {
+                        $view->with('numleaveapproval', '0')
+                        ->with('numoverapproval', '0')
+                        ->with('numapproval', '0')
+                        ->with('numleavehrapproval', '0')
+                        ->with('numoverhrapproval', '0')
+                        ->with('numhrapproval', '0');
+                    }
+                 } // if i am not LM and not HR no need to handle it becuse in the app layout it's not processed
                 }
             }
 

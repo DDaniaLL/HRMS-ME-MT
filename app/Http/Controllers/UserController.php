@@ -178,8 +178,8 @@ class UserController extends Controller
         //         ->all();
         // });
         // dd($balances);
-            $leaves = Leave::where('user_id', $user->id)->get();
-            $overtimes = Overtime::where('user_id', $user->id)->get();
+            $leaves = Leave::where('user_id', $user->id)->with('user','leavetype')->get();
+            $overtimes = Overtime::where('user_id', $user->id)->with('user')->get();
 
             return view('admin.users.show', [
                 'user' => $user,
