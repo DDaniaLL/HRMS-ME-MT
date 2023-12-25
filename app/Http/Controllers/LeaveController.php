@@ -785,8 +785,8 @@ class LeaveController extends Controller
             $currentbalance = Balance::where('user_id', $leave->user->id)->where('name',$leavetype->name)->pluck('value')[0];
             
 
-            $carryoverleavetype = Leavetype::where('iscarryover','yes')->first();
-            $currentcarryover = Balance::where('user_id', $leave->user->id)->where('name',$carryoverleavetype->name)->pluck('value')[0];
+            // $carryoverleavetype = Leavetype::where('iscarryover','yes')->first();
+            // $currentcarryover = Balance::where('user_id', $leave->user->id)->where('name',$carryoverleavetype->name)->pluck('value')[0];
             if ($leavetype->issicksc)
             {
                 $newbalance = $currentbalance + 1;
